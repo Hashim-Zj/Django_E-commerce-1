@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import password_validation
+from owner.models import cart
 
 class UserRegisterForm(UserCreationForm):
   password1=forms.CharField(
@@ -32,4 +33,12 @@ class UserLoginForm(forms.ModelForm):
     widgets={
       'username':forms.TextInput(attrs={"class":"form-control"}),
       'password':forms.PasswordInput(attrs={"class":"form-control"}),
+    }
+
+class AddToCartForm(forms.ModelForm):
+  class Meta:
+    model=cart
+    fields=['quantity']
+    widgets={
+      "quantity":forms.NumberInput(attrs={"class":"form-control"})
     }

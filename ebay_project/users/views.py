@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render,redirect
 from django.views.generic import TemplateView,CreateView,FormView,DeleteView
-from users.forms import UserRegisterForm,UserLoginForm
+from users.forms import UserRegisterForm,UserLoginForm,AddToCartForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate,login,logout
@@ -55,4 +55,8 @@ class ProductDetailView(DeleteView):
   pk_url_kwarg="id"
   context_object_name="pro"
 
-class 
+class AddToCartView(View):
+  def get(self, request,*args,**kwargs):
+    pro=product.objects.get(id=kwargs.get("id"))
+    form=AddToCartForm
+    return render(request, "add_to_cart.html",{"pro":pro,"form":form})
