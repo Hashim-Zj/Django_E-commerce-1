@@ -33,7 +33,7 @@ class cart(models.Model):
   date=models.DateField(auto_now_add=True)
 
   def __str__(self):
-    return self.product_name
+    return self.product_name.product_name
 
 class orders(models.Model):
   product_name=models.ForeignKey(cart,on_delete=models.CASCADE)

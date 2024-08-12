@@ -29,7 +29,8 @@
   <div class="col-6">
     <form action="" method="post">
       {% csrf_token %}
-      {% form %}
+      {{ form }}
+      <input type="submit">
     </form>
   </div>
 

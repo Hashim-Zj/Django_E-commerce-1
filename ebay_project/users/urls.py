@@ -8,4 +8,5 @@ urlpatterns=[
   path('logout',views.UserLogoutView.as_view(),name='logout_view'),
   path('detail/<int:id>',views.ProductDetailView.as_view(),name='detail_view'),
   path('cart/<int:id>',views.AddToCartView.as_view(),name='addcart_view'),
+  path('cartlist',views.CartListView.as_view(),name='cartlist_view'),
 ]
