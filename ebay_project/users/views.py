@@ -2,13 +2,14 @@ from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render,redirect
 from django.views.generic import TemplateView,CreateView,FormView,DeleteView,ListView
-from users.forms import UserRegisterForm,UserLoginForm,AddToCartForm
+from users.forms import UserRegisterForm,UserLoginForm,AddToCartForm,OrderPlaceForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.views import View
-from owner.models import product,cart
+from owner.models import product,cart,orders
+from django.core.mail import send_mail,settings
 
 
 # Create your views here.
@@ -89,4 +90,28 @@ class CartListView(ListView):
   context_object_name="pro"
 
   def get_queryset(self):
-    return cart.objects.filter(user=self.request.user)
+    return cart.objects.filter(user=self.request.user).exclude(status="order-placed")
+
+class CartCancelView(View):
+  def get(self,request):
+    return redirect('home_view')
+  
+class OrderPlaceView(FormView):
+  template_name='order_place.html'
+  model=orders
+  form_class=OrderPlaceForm
+
+  def post(self,request,*args,**kwargs):
+    in_cart=cart.objects.get(id=kwargs.get("id"))
+    user=request.user
+    email=user.email
+    address=request.POST.get("address")
+    phone=request.POST.get("phone")
+    orders.objects.create(user=user,product_name=in_cart,address=address,phone=phone)
+    in_cart.status="order-placed"
+    in_cart.save()
+    send_mail("E-Bay.com","Your order placed Successful!",settings.EMAIL_HOST_USER,[email])
+    messages.success(request,"order placed successful")
+    return redirect('cartlist_view')
+  
+  

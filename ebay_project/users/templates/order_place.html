@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block contant %}
+
+<section>
+  <form action="" method="post">
+    <legend>Your Order</legend>
+    <fieldset>
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit" class="btn btn-outline-info">Order</button>
+    </fieldset>
+  </form>
+</section>
+
+{% endblock %}

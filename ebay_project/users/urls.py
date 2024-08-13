@@ -9,4 +9,6 @@ urlpatterns=[
   path('detail/<int:id>',views.ProductDetailView.as_view(),name='detail_view'),
   path('cart/<int:id>',views.AddToCartView.as_view(),name='addcart_view'),
   path('cartlist',views.CartListView.as_view(),name='cartlist_view'),
+  path('cartcancel',views.CartCancelView.as_view(),name='cartcancel_view'),
+  path('placeorder/<int:id>',views.OrderPlaceView.as_view(),name='placeorder_view'),
 ]

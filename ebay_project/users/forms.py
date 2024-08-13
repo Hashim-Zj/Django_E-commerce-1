@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import password_validation
-from owner.models import cart
+from owner.models import cart,orders
 
 class UserRegisterForm(UserCreationForm):
   password1=forms.CharField(
@@ -17,13 +17,14 @@ class UserRegisterForm(UserCreationForm):
         strip=False,
         help_text=("Enter the same password as before, for verification."),
     )
-  model=User
-  fields=["username","email","password1","password2"]
+  class Meta:
+      model=User
+      fields=["username","email","password1","password2"]
 
-  widgets={
-    'username':forms.TextInput(attrs={"class":"form-control"}),
-    'email':forms.EmailInput(attrs={"class":"form-control"}),
-  }
+      widgets={
+        'username':forms.TextInput(attrs={"class":"form-control"}),
+        'email':forms.EmailInput(attrs={"class":"form-control"}),
+      }
 
 class UserLoginForm(forms.ModelForm):
   class Meta:
@@ -41,4 +42,13 @@ class AddToCartForm(forms.ModelForm):
     fields=['quantity']
     widgets={
       "quantity":forms.NumberInput(attrs={"class":"form-control"})
+    }
+
+class OrderPlaceForm(forms.ModelForm):
+  class Meta:
+    model=orders
+    fields=['address','phone']
+    widgets={
+      "address":forms.TextInput(attrs={"class":"form-control"}),
+      "phone":forms.NumberInput(attrs={"class":"form-control"}),
     }

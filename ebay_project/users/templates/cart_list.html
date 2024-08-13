@@ -22,9 +22,11 @@
             </div>
           </div>
           <!-- Product actions-->
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-between">
             <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                href="">Buy Product</a></div>
+                href="{% url 'cartcancel_view' %}">Cancel</a>
+              <a class="btn btn-outline-dark mt-auto" href="{% url 'placeorder_view' i.id %}">Order</a>
+            </div>
           </div>
         </div>
       </div>
