@@ -68,16 +68,14 @@ class AddToCartView(View):
     pro=product.objects.get(id=kwargs.get("id"))
     qty=request.POST.get("quantity")
 
-    cart_obj=cart.objects.filter(user=user,product_name=pro)
+    cart_obj=cart.objects.filter(user=user,product_name=pro,status="in-cart")
 
     if cart_obj:
       cart_pro=cart_obj[0]
       cart_pro.quantity+=int(qty)
       cart_pro.save()
-
       messages.success(request,"Product Added to cart")
       return redirect("home_view")
-    
     else:
       cart.objects.create(user=user,product_name=pro,quantity=qty)
       messages.success(request,"Product Added to cart")
@@ -90,7 +88,7 @@ class CartListView(ListView):
   context_object_name="pro"
 
   def get_queryset(self):
-    return cart.objects.filter(user=self.request.user).exclude(status="order-placed")
+    return cart.objects.filter(user=self.request.user).exclude(status="order-placed").order_by("-date")
 
 class CartCancelView(View):
   def get(self,request):

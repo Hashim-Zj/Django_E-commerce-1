@@ -46,5 +46,5 @@ class orders(models.Model):
     ("order-placed","order-placed"),
     ("delivered","delivered"),
   )
-  status=models.CharField(max_length=100,default="f",choices=options)
+  status=models.CharField(max_length=100,default="order-placed",choices=options)
   date=models.DateField(auto_now_add=True)
