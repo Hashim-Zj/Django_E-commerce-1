@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+
+{% block contant %}
+
+<section class="w-75 d-flex">
+  <div class="col-6">
+    <figure class="m-4">
+      <img src="{{order.product_name.product_name.image.url}}" alt="" width="500" height="500">
+    </figure>
+  </div>
+  <div class="col-6 m-5">
+<ul class="list-group">
+  <li class="display-5 fw-bold list-group-item">{{order.product_name.product_name}}</li>
+  <li class="list-group-item">{{order.product_name.product_name.description}}</li>
+  <li class="list-group-item">{{order.product_name.description}}</li>
+</ul>
+<ul></ul>
+<form action="" method="post">
+  <fieldset>
+    {% csrf_token %}
+    {{form}}
+  </fieldset>
+  <fieldset class="d-flex my-3">
+  <button class="btn btn-outline-primary w-100 mx-2" type="submit">Submit</button>
+</fieldset>
+</form>
+  </div>
+ 
+</section>
+
+{% endblock %}

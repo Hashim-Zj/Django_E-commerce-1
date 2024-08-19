@@ -12,10 +12,9 @@
     <title>Hello, world!</title>
   </head>
 
-  <body class="d-flex">
-    <h1>admin
-    </h1>
-    <h2 class="display-3">New orders <span class="badge bg-info"> 4</span></h2>
+  <body class="justify-content-center">
+    <h1 class="bg-dark text-light display-4">admin</h1>
+    <h2 class="display-5">New orders <a href="{% url 'orderlist_view' %}"><span class="badge bg-info"> {{orders}}</span></a></h2>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>

@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block contant %}
+
+<section>
+  <table class="table table-bordered">
+    <thead class="bg-dark text-light fw-bold text-center">
+      <tr>
+        <th>ID</th>
+        <th>product</th>
+        <th>quantity</th>
+        <th>status</th>
+        <th>date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in orders %}
+      <tr>
+        <td>{{i.id}}</td>
+        <td>{{i.product_name.product_name}}</td>
+        <td>{{i.product_name.quantity}}</td>
+        <td>{{i.status}}</td>
+        <td>{{i.date}}</td>
+        <td><a href="{% url 'orderdetail_view' i.id %}" class="btn btn-outline-dark text-danger">view detail</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+   
+  </table>
+</section>
+
+{% endblock %}

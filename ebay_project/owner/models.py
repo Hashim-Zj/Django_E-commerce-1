@@ -48,3 +48,6 @@ class orders(models.Model):
   )
   status=models.CharField(max_length=100,default="order-placed",choices=options)
   date=models.DateField(auto_now_add=True)
+  expected_delivery_date=models.DateField(null=True)
+
+
