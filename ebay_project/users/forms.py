@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import password_validation
-from owner.models import cart,orders
+from owner.models import cart,orders,Reviews
 
 class UserRegisterForm(UserCreationForm):
   password1=forms.CharField(
@@ -51,4 +51,13 @@ class OrderPlaceForm(forms.ModelForm):
     widgets={
       "address":forms.TextInput(attrs={"class":"form-control"}),
       "phone":forms.NumberInput(attrs={"class":"form-control"}),
+    }
+
+class ReviewForm(forms.ModelForm):
+  class Meta:
+    model=Reviews
+    fields=["comment","rating"]
+    widgets={
+      "comment":forms.TextInput(attrs={"class":"form-control"}),
+      "rating":forms.NumberInput(attrs={"class":"form-control"})
     }

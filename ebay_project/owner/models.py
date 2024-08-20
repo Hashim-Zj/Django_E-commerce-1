@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator,MaxValueValidator
 
 # Create your models here.
 
@@ -50,4 +51,8 @@ class orders(models.Model):
   date=models.DateField(auto_now_add=True)
   expected_delivery_date=models.DateField(null=True)
 
-
+class Reviews(models.Model):
+  product=models.ForeignKey(product,on_delete=models.CASCADE)
+  user=models.ForeignKey(User,on_delete=models.CASCADE)
+  comment=models.CharField(max_length=200)
+  rating=models.PositiveIntegerField(validators=[MinValueValidator(1),MaxValueValidator(5)])

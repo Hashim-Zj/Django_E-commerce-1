@@ -21,8 +21,9 @@ class OrderListView(ListView):
   model=orders
   context_object_name="orders"
 
-  def get_queryset(self):
-    return orders.objects.filter(status="order-placed")
+  # def get_queryset(self):
+  #   return orders.objects.filter(status="order-placed")
+
   
 class OrderDetailView(DetailView):
   template_name="order_detail.html"

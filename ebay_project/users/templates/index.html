@@ -43,11 +43,18 @@
                             </ul>
                         </li>
                     </ul>
+                    <form class="d-flex mx-3">
+                        <a href="{% url 'userorderlist_view' %}" class="btn btn-outline-primary" type="submit">
+                            <i class="bi bi-award-fill"></i>
+                            Orders
+                            <span class="badge bg-success text-white ms-1 rounded-pill">{{ order_count }}</span>
+                        </a>
+                    </form>
                     <form class="d-flex">
-                        <a href="{% url 'cartlist_view' %}" class="btn btn-outline-dark" type="submit">
+                        <a href="{% url 'cartlist_view' %}" class="btn btn-outline-info" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">{{ count }}</span>
+                            <span class="badge bg-danger text-white ms-1 rounded-pill">{{ count }}</span>
                         </a>
                     </form>
                 </div>

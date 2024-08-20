@@ -10,7 +10,8 @@ from django.contrib import messages
 from django.views import View
 from owner.models import product,cart,orders
 from django.core.mail import send_mail,settings
-
+from .decorator import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -81,7 +82,7 @@ class AddToCartView(View):
       messages.success(request,"Product Added to cart")
       return redirect("home_view")
 
-
+@method_decorator(login_required)
 class CartListView(ListView):
   model=cart
   template_name='cart_list.html'
@@ -112,4 +113,9 @@ class OrderPlaceView(FormView):
     messages.success(request,"order placed successful")
     return redirect('cartlist_view')
   
-  
+class UserOrderListView(View):
+
+  def get(self,request):
+    all_orders=orders.objects.filter(user=request.user).order_by("-date")
+    deliverd=orders.objects.filter(user=request.user,status="delivered")
+    return render(request,'user_order_list.html',{"all_orders":all_orders,"deliverd":deliverd})
