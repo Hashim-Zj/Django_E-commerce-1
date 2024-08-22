@@ -57,6 +57,7 @@ class ReviewForm(forms.ModelForm):
   class Meta:
     model=Reviews
     fields=["comment","rating"]
+    options=(("1","1"))
     widgets={
       "comment":forms.TextInput(attrs={"class":"form-control"}),
       "rating":forms.NumberInput(attrs={"class":"form-control"})

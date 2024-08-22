@@ -12,4 +12,5 @@ urlpatterns=[
   path('cartcancel',views.CartCancelView.as_view(),name='cartcancel_view'),
   path('placeorder/<int:id>',views.OrderPlaceView.as_view(),name='placeorder_view'),
   path('userorderlist',views.UserOrderListView.as_view(),name='userorderlist_view'),
+  path('addreview/<int:id>',views.AddReview.as_view(),name='addreview_view'),
 ]

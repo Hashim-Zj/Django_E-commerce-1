@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block contant %}
+
+
+<section>
+  <form action="" method="post" class="w-50 m-auto shadow border-1">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Submit" class="btn btn-outline-info">
+  </form>
+</section>
+
+{% endblock %}

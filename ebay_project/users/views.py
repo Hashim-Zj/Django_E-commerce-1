@@ -2,13 +2,13 @@ from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render,redirect
 from django.views.generic import TemplateView,CreateView,FormView,DeleteView,ListView
-from users.forms import UserRegisterForm,UserLoginForm,AddToCartForm,OrderPlaceForm
+from users.forms import UserRegisterForm,UserLoginForm,AddToCartForm,OrderPlaceForm,ReviewForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.views import View
-from owner.models import product,cart,orders
+from owner.models import product,cart,orders,Reviews
 from django.core.mail import send_mail,settings
 from .decorator import login_required
 from django.utils.decorators import method_decorator
@@ -46,6 +46,7 @@ class UserLoginView(FormView):
       messages.success(request,"Invalid credaintials")
       return redirect("home_view")
 
+@method_decorator(login_required,name="dispatch")
 class UserLogoutView(View):
   def get(self,request):
     logout(request)
@@ -82,7 +83,8 @@ class AddToCartView(View):
       messages.success(request,"Product Added to cart")
       return redirect("home_view")
 
-@method_decorator(login_required)
+
+@method_decorator(login_required,name="dispatch")
 class CartListView(ListView):
   model=cart
   template_name='cart_list.html'
@@ -113,9 +115,31 @@ class OrderPlaceView(FormView):
     messages.success(request,"order placed successful")
     return redirect('cartlist_view')
   
+
 class UserOrderListView(View):
 
   def get(self,request):
     all_orders=orders.objects.filter(user=request.user).order_by("-date")
-    deliverd=orders.objects.filter(user=request.user,status="delivered")
+    deliverd=orders.objects.filter(user=request.user,status="deliverd")
     return render(request,'user_order_list.html',{"all_orders":all_orders,"deliverd":deliverd})
+    
+
+class AddReview(CreateView):
+  model=Reviews
+  form_class=ReviewForm
+  template_name="reviws.html"
+
+  def post(self,request,*args,**kwargs):
+    comment=request.POST.get("comment")
+    rating=request.POST.get("rating")
+    pro=product.objects.get(id=kwargs.get("id"))
+    Reviews.objects.create(user=request.user,product=pro,comment=comment,rating=rating)
+    reviews=Reviews.objects.filter(product=pro)
+    ratings=[i.rating for i in reviews]
+    print(ratings)
+    total_rating=sum(ratings)/len(ratings)
+    product.rating=total_rating
+    product.save()
+    return redirect("home_view")
+
+  

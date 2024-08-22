@@ -48,7 +48,7 @@
         <td>{{i.product_name.quantity}}</td>
         <td>{{i.status}}</td>
         <td>{{i.date}}</td>
-        <td><a href="{% url 'orderdetail_view' i.id %}" class="btn btn-outline-dark text-danger">Rate product</a></td>
+        <td><a href="{% url 'addreview_view' i.product_name.product_name.id %}" class="btn btn-outline-dark text-danger">Rate product</a></td>
       </tr>
       {% endfor %}
     </tbody>
